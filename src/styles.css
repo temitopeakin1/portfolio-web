@@ -1,3 +1,58 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root {
+  /* Light mode (exact from screenshot): warm off-white gradient, dark text, peach/orange accent */
+  --bg: #faf7f2;
+  --bg-end: #ffffff;
+  --bg-card: #f5f0e8;
+  --text: #1a1a1a;
+  --text-muted: #4a4a4a;
+  --accent: #c45c3e;
+  --accent-hover: #a84d32;
+  --border: #e5e0d8;
+  --header-bg: rgba(250, 247, 242, 0.9);
+  --btn-primary-text: #ffffff;
+}
+
+.dark {
+  /* Dark mode (from screenshot): warm dark brown radial gradient, white text */
+  --bg: #2c1810;
+  --bg-center: #4a3528;
+  --bg-outer: #1f120c;
+  --bg-card: #3d2817;
+  --text: #f5f5f5;
+  --text-muted: #e0d8d0;
+  --accent: #ffffff;
+  --accent-hover: #e8e8e8;
+  --border: rgba(255, 255, 255, 0.25);
+  --header-bg: rgba(44, 24, 16, 0.9);
+  --btn-primary-text: #2c1810;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--text);
+  }
+
+  body {
+    background: linear-gradient(90deg, var(--bg) 0%, var(--bg-end) 50%, var(--bg-end) 100%);
+  }
+
+  .dark body {
+    background: radial-gradient(ellipse at center, var(--bg-center) 0%, var(--bg) 50%, var(--bg-outer) 100%);
+  }
+}

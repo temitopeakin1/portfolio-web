@@ -1,0 +1,10 @@
+/* Hamburger open state - plain CSS for nth-child targeting */
+.hamburger:nth-child(1).open {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger:nth-child(2).open {
+  opacity: 0;
+}
+.hamburger:nth-child(3).open {
+  transform: rotate(-45deg) translate(5px, -5px);
+}

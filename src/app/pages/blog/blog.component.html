@@ -1,0 +1,22 @@
+<section class="py-16 px-8">
+  <div class="max-w-[800px] mx-auto">
+    <h1 class="text-4xl font-bold mb-2 tracking-tight" style="color: var(--text);">Blog</h1>
+    <p class="text-lg mb-12" style="color: var(--text-muted);">
+      Thoughts on software engineering, architecture, and technology.
+    </p>
+    <div class="flex flex-col gap-8">
+      @for (post of posts; track post.title) {
+        <article class="rounded-xl p-6 transition-colors duration-200 border" style="background-color: var(--bg-card); border-color: var(--border);">
+          <h2 class="text-xl font-semibold mb-2" style="color: var(--text);">{{ post.title }}</h2>
+          <p class="text-[15px] leading-relaxed mb-4" style="color: var(--text-muted);">{{ post.excerpt }}</p>
+          <div class="text-[13px] mb-4" style="color: var(--text-muted);">
+            <span>{{ post.date }}</span>
+            <span class="mx-2">·</span>
+            <span>{{ post.readTime }}</span>
+          </div>
+          <a href="#" class="text-[15px] font-semibold no-underline transition-colors" style="color: var(--accent);">Read more →</a>
+        </article>
+      }
+    </div>
+  </div>
+</section>

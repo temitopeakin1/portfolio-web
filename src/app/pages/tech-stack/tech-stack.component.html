@@ -1,0 +1,20 @@
+<section class="py-16 px-8">
+  <div class="max-w-[1000px] mx-auto">
+    <h1 class="text-4xl font-bold mb-2 tracking-tight" style="color: var(--text);">Tech Stack</h1>
+    <p class="text-lg mb-12" style="color: var(--text-muted);">
+      Technologies and tools I use to build robust, scalable software solutions.
+    </p>
+    <div class="flex flex-col gap-8">
+      @for (category of categories; track category.title) {
+        <div class="rounded-xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border);">
+          <h2 class="text-lg font-semibold mb-4" style="color: var(--accent);">{{ category.title }}</h2>
+          <div class="flex flex-wrap gap-3">
+            @for (item of category.items; track item) {
+              <span class="px-4 py-2 rounded-full text-sm font-medium border" style="background-color: var(--bg-card); color: var(--accent); border-color: var(--border);">{{ item }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
