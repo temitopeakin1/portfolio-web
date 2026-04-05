@@ -58,7 +58,9 @@
     </nav>
   </header>
   <main class="flex-1">
-    <router-outlet></router-outlet>
+    <div #pageRoot class="min-h-full">
+      <router-outlet />
+    </div>
   </main>
   <footer class="py-6 text-center border-t border-[var(--border)] text-sm" style="color: var(--text-muted);">
     <p>&copy; {{ currentYear }} Temitope Akinmegha. All rights reserved.</p>
