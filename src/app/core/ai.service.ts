@@ -127,7 +127,7 @@ export class AiService {
       };
     } catch (error) {
       if (!environment.production && error instanceof HttpErrorResponse) {
-        console.error('[Portfolio Copilot]', error.status, error.message, error.error);
+        console.error('[Tmegha AI bot]', error.status, error.message, error.error);
       }
       return {
         answer: this.aiFailureMessage(error),

@@ -5,6 +5,7 @@ import {
   Injector,
   afterNextRender,
   inject,
+  signal,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,8 +32,35 @@ export class LayoutComponent {
 
   protected menuOpen = false;
   protected currentYear = new Date().getFullYear();
+  protected readonly clockDateDisplay = signal('');
+  protected readonly clockDisplay = signal('');
+  protected readonly clockIso = signal('');
 
   constructor() {
+    const tickClock = () => {
+      const d = new Date();
+      this.clockDateDisplay.set(
+        d.toLocaleDateString(undefined, {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        }),
+      );
+      this.clockDisplay.set(
+        d.toLocaleTimeString(undefined, {
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        }),
+      );
+      this.clockIso.set(d.toISOString());
+    };
+    tickClock();
+    const clockId = window.setInterval(tickClock, 1000);
+    this.destroyRef.onDestroy(() => clearInterval(clockId));
+
     this.router.events
       .pipe(
         filter((e): e is NavigationEnd => e instanceof NavigationEnd),
