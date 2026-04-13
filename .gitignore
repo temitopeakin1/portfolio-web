@@ -6,6 +6,10 @@
 /out-tsc
 /bazel-out
 
+# Local secrets (e.g. OPENAI_API_KEY for dev proxy)
+.env
+.env.local
+
 # Node
 /node_modules
 npm-debug.log

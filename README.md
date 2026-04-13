@@ -12,6 +12,19 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## Portfolio Copilot (AI) setup
+
+Portfolio Copilot is available on the About page and uses frontend-only API calls.
+
+1. Open `src/environments/environment.ts`.
+2. Set:
+   - `ai.apiKey` to your provider API key
+   - `ai.endpoint` to an OpenAI-compatible chat completions endpoint
+   - `ai.model` to your preferred model ID
+3. Optionally set production values in `src/environments/environment.prod.ts`.
+
+If credentials are missing or invalid, Copilot displays a friendly fallback message.
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build"
+  publish = "dist/tmegha-portfolio/browser"
+
+[functions]
+  directory = "netlify/functions"

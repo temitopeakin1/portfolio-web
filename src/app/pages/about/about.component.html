@@ -3,9 +3,9 @@
     <h1 class="text-4xl font-bold mb-12 tracking-tight" style="color: var(--text);">About Me</h1>
     <div class="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-12 items-start">
       <div class="text-justify">
-        <p class="text-xl leading-relaxed mb-5" style="color: var(--text);">
+        <p class="leading-relaxed mb-5" style="color: var(--text-muted);">
           I'm Temitope Akinmegha, a Senior Software engineer with over six years of experience building production-grade
-          web applications, particularly in fintech and enterprise environments.
+          web applications, particularly in fintech and products.
         </p>
         <p class="leading-relaxed mb-5" style="color: var(--text-muted);">
           Most of my work has been centered around React, Next.js, Angular, Remix, Node.js, NestJS, and TypeScript, where I focus on
@@ -53,6 +53,76 @@
         </div>
       </div>
     </div>
+
+    <div class="mt-16">
+      <app-portfolio-copilot />
+    </div>
+
+    <div class="mt-16">
+      <h2 class="text-2xl font-bold mb-10 tracking-tight" style="color: var(--text);">Work experience</h2>
+
+      <ol class="list-none p-0 m-0">
+        @for (job of workExperiences; track job.id; let last = $last) {
+          <li class="flex gap-5 md:gap-8 items-stretch pb-12 last:pb-0">
+            <!-- Timeline rail: dot + connector -->
+            <div class="flex flex-col items-center w-7 md:w-8 shrink-0" aria-hidden="true">
+              <div
+                class="rounded-full w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 mt-1.5 z-10 ring-4 ring-[var(--bg-card)]"
+                style="background-color: var(--accent);"
+              ></div>
+              @if (!last) {
+                <div class="w-px flex-1 min-h-[2rem] mt-3 rounded-full" style="background-color: var(--border);"></div>
+              }
+            </div>
+
+            <!-- Card -->
+            <div class="flex-1 min-w-0 -mt-0.5">
+              <div
+                class="rounded-xl p-5 md:p-6 border transition-shadow duration-200 hover:shadow-md"
+                style="background-color: var(--bg-card); border-color: var(--border);"
+              >
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-6 mb-4">
+                  <div>
+                    <p
+                      class="text-[11px] md:text-xs font-semibold uppercase tracking-[0.12em] mb-2"
+                      style="color: var(--accent);"
+                    >
+                      {{ job.startDate }} — {{ job.endDate }}
+                    </p>
+                    <h3 class="text-lg md:text-xl font-semibold leading-snug" style="color: var(--text);">
+                      {{ job.role }}
+                    </h3>
+                    <p class="text-[15px] mt-1 flex flex-wrap items-center gap-2" style="color: var(--text-muted);">
+                      <span>{{ job.company }}@if (job.location) { · {{ job.location }}}</span>
+                      @if (job.workMode) {
+                        <span
+                          class="text-[11px] uppercase tracking-wide px-2 py-1 rounded-full border"
+                          style="color: var(--accent); border-color: var(--border);"
+                        >
+                          {{ job.workMode }}
+                        </span>
+                      }
+                    </p>
+                  </div>
+                </div>
+                <ul class="list-none p-0 m-0 space-y-2.5 border-t pt-4" style="border-color: var(--border);">
+                  @for (line of job.highlights; track line) {
+                    <li class="text-[15px] leading-relaxed flex gap-3" style="color: var(--text-muted);">
+                      <span
+                        class="mt-2 shrink-0 w-1 h-1 rounded-full opacity-80"
+                        style="background-color: var(--accent);"
+                      ></span>
+                      <span>{{ line }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </li>
+        }
+      </ol>
+    </div>
+
     <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
       <div class="rounded-xl p-6 border flex flex-col" style="background-color: var(--bg-card); border-color: var(--border);">
         <h3 class="text-base font-semibold mb-4" style="color: var(--text);">What I Do</h3>

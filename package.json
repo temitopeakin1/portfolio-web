@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently -k \"node dev-chat-server.mjs\" \"ng serve\"",
+    "start:app-only": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -22,6 +23,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
+    "dotenv": "^16.6.1",
     "@angular/build": "^21.2.0",
     "@angular/cli": "^21.2.0",
     "@angular/compiler-cli": "^21.2.0",

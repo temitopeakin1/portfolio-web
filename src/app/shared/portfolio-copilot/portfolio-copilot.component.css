@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+button:disabled,
+textarea:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
