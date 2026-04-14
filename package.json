@@ -6,6 +6,7 @@
     "start": "concurrently -k \"node dev-chat-server.mjs\" \"ng serve\"",
     "start:app-only": "ng serve",
     "build": "ng build",
+    "build:namecheap": "ng build --configuration=namecheap",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

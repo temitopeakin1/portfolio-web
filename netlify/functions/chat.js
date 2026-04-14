@@ -2,9 +2,30 @@
 
 const { handleChatRequest } = require('./lib/chat-core.cjs');
 
+function corsHeaders() {
+  const origin = (process.env.ALLOWED_ORIGIN || '*').trim();
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+}
+
+function withCors(resultHeaders) {
+  return { ...corsHeaders(), ...(resultHeaders || {}) };
+}
+
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: corsHeaders(), body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return {
+      statusCode: 405,
+      headers: withCors({ 'Content-Type': 'text/plain' }),
+      body: 'Method Not Allowed',
+    };
   }
 
   let body;
@@ -17,7 +38,7 @@ exports.handler = async (event) => {
   } catch {
     return {
       statusCode: 400,
-      headers: { 'Content-Type': 'application/json' },
+      headers: withCors({ 'Content-Type': 'application/json' }),
       body: JSON.stringify({ error: 'Invalid JSON' }),
     };
   }
@@ -25,7 +46,7 @@ exports.handler = async (event) => {
   const result = await handleChatRequest(body);
   return {
     statusCode: result.statusCode,
-    headers: result.headers,
+    headers: withCors(result.headers),
     body: result.body,
   };
 };
