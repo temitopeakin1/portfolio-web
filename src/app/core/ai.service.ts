@@ -36,6 +36,14 @@ export class AiService {
       return 'I could not reach the AI service right now. Please try again.';
     }
     if (error.status === 0) {
+      if (environment.production) {
+        return (
+          'The browser could not complete the chat request (often CORS or a bad chat URL). ' +
+          'Confirm `ai.endpoint` in your production environment points to a live Netlify function, ' +
+          'the URL has no double slash, and Netlify env `ALLOWED_ORIGINS` includes your exact site origin ' +
+          '(e.g. both https://yourdomain.com and https://www.yourdomain.com if you use both).'
+        );
+      }
       return 'The AI request did not reach the server. Run `npm start` (starts the app and the local `/api/chat` server), or check that OPENAI_API_KEY is set in `.env` for local development.';
     }
     if (error.status === 401) {

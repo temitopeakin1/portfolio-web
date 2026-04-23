@@ -7,9 +7,13 @@ import { AiEnvironmentConfig } from './environment.model';
  * 2. Set `netlifyChatBaseUrl` below to that origin (no trailing slash).
  * 3. In Netlify → Site settings → Environment variables:
  *    - OPENAI_API_KEY (required)
- *    - ALLOWED_ORIGIN = https://your-namecheap-domain.com (match your live site exactly)
+ *    - ALLOWED_ORIGINS = comma-separated list of exact browser origins, e.g.
+ *      https://yourdomain.com,https://www.yourdomain.com
+ *      (must match how visitors open the site: scheme + host + no path; no trailing slash)
  */
-const netlifyChatBaseUrl = 'https://YOUR-SITE.netlify.app';
+const netlifyChatBaseUrl = 'https://temitopeakinmegha.netlify.app'
+  .trim()
+  .replace(/\/+$/, '');
 
 export const environment: AiEnvironmentConfig = {
   production: true,
