@@ -49,7 +49,7 @@ function sanitizeMessages(raw) {
 }
 
 /**
- * @param {Record<string, unknown>} body parsed JSON body
+ * @param {Record<string, unknown>} body
  * @returns {Promise<{ statusCode: number; headers: Record<string, string>; body: string }>}
  */
 async function handleChatRequest(body) {

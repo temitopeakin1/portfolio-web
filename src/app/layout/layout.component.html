@@ -8,12 +8,12 @@
         class="hidden md:flex items-center gap-8"
       >
         <a routerLink="/" routerLinkActive="!text-[var(--accent)]" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Home</a>
-        <a routerLink="/about" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">About</a>
+        <a routerLink="/about" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" (mouseenter)="prefetchAboutHeroImage()" (focus)="prefetchAboutHeroImage()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">About</a>
         <a routerLink="/tech-stack" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Tech Stack</a>
         <a routerLink="/projects" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Projects</a>
         <a routerLink="/blog" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Blog</a>
         <a routerLink="/contact" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Contact</a>
-        <a href="assets/documents/Temitope-Akinmegha_Senior-Software-Engineer-CV%20-%20Copy.pdf" target="_blank" rel="noopener noreferrer" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Resume</a>
+        <a href="assets/documents/Temitope-Akinmegha_Senior-Software-Engineer-CV.pdf" target="_blank" rel="noopener noreferrer" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Resume</a>
       </nav>
       <button
         type="button"
@@ -49,12 +49,12 @@
       [class.hidden]="!menuOpen"
     >
       <a routerLink="/" routerLinkActive="!text-[var(--accent)]" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Home</a>
-      <a routerLink="/about" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">About</a>
+      <a routerLink="/about" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" (mouseenter)="prefetchAboutHeroImage()" (focus)="prefetchAboutHeroImage()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">About</a>
       <a routerLink="/tech-stack" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Tech Stack</a>
       <a routerLink="/projects" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Projects</a>
       <a routerLink="/blog" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Blog</a>
       <a routerLink="/contact" routerLinkActive="!text-[var(--accent)]" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Contact</a>
-      <a href="assets/documents/Temitope-Akinmegha_Senior-Software-Engineer-CV%20-%20Copy.pdf" target="_blank" rel="noopener noreferrer" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Resume</a>
+      <a href="assets/documents/Temitope-Akinmegha_Senior-Software-Engineer-CV.pdf" target="_blank" rel="noopener noreferrer" (click)="closeMenu()" class="text-[var(--text-muted)] hover:text-[var(--accent)] no-underline text-[15px] font-medium transition-colors">Resume</a>
     </nav>
   </header>
   <main class="flex-1">
@@ -62,9 +62,9 @@
       <router-outlet />
     </div>
   </main>
-  <footer class="py-6 px-8 md:px-24 lg:px-32 border-t border-[var(--border)] text-sm flex flex-row flex-wrap items-center gap-y-2" style="color: var(--text-muted);">
-    <p class="m-0 text-left">&copy; {{ currentYear }} Temitope Akinmegha. All rights reserved.</p>
-    <p class="m-0 shrink-0 ml-auto text-right">
+  <footer class="py-6 px-8 md:px-24 lg:px-32 border-t border-[var(--border)] text-sm flex flex-col md:flex-row flex-wrap items-center justify-center md:justify-between gap-y-2 text-center md:text-left" style="color: var(--text-muted);">
+    <p class="m-0 text-center md:text-left">&copy; {{ currentYear }} Temitope Akinmegha. All rights reserved.</p>
+    <p class="m-0 shrink-0 text-center md:ml-auto md:text-right">
       <time class="inline-flex items-baseline gap-4 tabular-nums" [attr.datetime]="clockIso()">
         <span>{{ clockDateDisplay() }}</span>
         <span>{{ clockDisplay() }}</span>

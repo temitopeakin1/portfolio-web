@@ -19,7 +19,6 @@ interface CopilotMessage {
   id: string;
   role: CopilotRole;
   text: string;
-  /** When true, bubble shows `Hey,` + animated 👋 then `text` (same pattern as Home hero). */
   greetingWithWave?: boolean;
 }
 
@@ -27,8 +26,9 @@ const SUGGESTED_PROMPTS = [
   "Give me Temitope's 30-second elevator pitch for recruiters.",
   'Which projects are best for fintech use cases?',
   'What frontend technologies does Temitope use most?',
-  'Explain CAP theorem at a high level for an interview.',
+  'Explain ACID properties in database transactions.',
   'What trade-offs matter when choosing REST vs GraphQL?',
+  'Explain the SOLID principle to a newbie Engineer.'
 ];
 
 @Component({

@@ -31,6 +31,7 @@ export class LayoutComponent {
   readonly pageRoot = viewChild<ElementRef<HTMLElement>>('pageRoot');
 
   protected menuOpen = false;
+  private aboutHeroImagePrefetchAdded = false;
   protected currentYear = new Date().getFullYear();
   protected readonly clockDateDisplay = signal('');
   protected readonly clockDisplay = signal('');
@@ -88,5 +89,16 @@ export class LayoutComponent {
 
   closeMenu(): void {
     this.menuOpen = false;
+  }
+
+  /** Warm cache for the About hero image before navigation (hover / keyboard focus). */
+  protected prefetchAboutHeroImage(): void {
+    if (this.aboutHeroImagePrefetchAdded || typeof document === 'undefined') return;
+    this.aboutHeroImagePrefetchAdded = true;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'image';
+    link.href = 'assets/images/about-image.svg';
+    document.head.appendChild(link);
   }
 }

@@ -29,28 +29,28 @@ export class ProjectsComponent {
       title: 'Frontend',
       items: [
         {
-          id: 'fe-loan-app',
-          title: 'Loan application system',
+          id: 'fe-dashboard-app',
+          title: 'Internal operations dashboard',
           description:
             'End-to-end loan flows with complex forms, uploads, and multi-step validation for enterprise clients.',
-          tech: ['React', 'TypeScript', 'Forms', 'API integration'],
-          link: '#',
+          tech: ['Next.js', 'TypeScript', 'zustand', 'framer-motion'],
+          link: 'https://team-dashboard-app.vercel.app/',
         },
         {
           id: 'fe-ops-dashboard',
-          title: 'Internal operations dashboard',
+          title: 'minimal sales dashboard',
           description:
-            'Data-heavy dashboards with real-time metrics, reporting, and role-based access for business operations.',
-          tech: ['React', 'Next.js', 'TypeScript', 'Data visualization'],
-          link: '#',
+            'Data-heavy dashboards with mock metrics, reporting, and role-based access for business operations.',
+          tech: ['React', 'Next.js', 'Framer-motion', 'Data visualization'],
+          link: 'https://dashboard-pay.vercel.app/',
         },
         {
-          id: 'fe-enterprise',
-          title: 'Enterprise web application',
+          id: 'fe-healthcare',
+          title: 'Nzuricares web application',
           description:
             'Scalable frontend architecture, maintainable modules, and performance-conscious delivery in regulated environments.',
-          tech: ['React', 'TypeScript', 'Architecture', 'Performance'],
-          link: '#',
+          tech: ['Next.js', 'TypeScript', 'Supabase-auth', 'Supabase'],
+          link: 'https://nzuricares-webapp.vercel.app/',
         },
         {
           id: 'fe-onboarding',

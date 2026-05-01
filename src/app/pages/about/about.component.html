@@ -37,8 +37,16 @@
         </p>
       </div>
       <div class="flex justify-center md:justify-end">
-        <img src="assets/images/about-image.svg" alt="Temitope Akinmegha"
-          class="w-full max-w-[320px] min-h-[480px] rounded-sm object-cover shadow-lg" />
+        <img
+          src="assets/images/about-image.svg"
+          alt="Temitope Akinmegha"
+          width="320"
+          height="480"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="w-full max-w-[320px] min-h-[480px] rounded-sm object-cover shadow-lg"
+        />
       </div>
     </div>
     <div class="w-full pt-10 mt-12 border-t pb-2" style="border-color: var(--border);">
@@ -59,10 +67,6 @@
 
         </div>
       </div>
-    </div>
-
-    <div class="mt-16">
-      <app-portfolio-copilot />
     </div>
 
     <div class="mt-16">
@@ -180,6 +184,10 @@
           </li>
         </ul>
       </div>
+    </div>
+
+    <div class="mt-16">
+      <app-portfolio-copilot />
     </div>
   </div>
 </section>

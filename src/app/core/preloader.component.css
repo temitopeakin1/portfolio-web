@@ -1,0 +1,114 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(90deg, var(--bg) 0%, var(--bg-end) 50%, var(--bg-end) 100%);
+  transition:
+    opacity 0.45s ease,
+    visibility 0.45s ease;
+}
+
+:host-context(.dark) .preloader {
+  background: radial-gradient(
+    ellipse at center,
+    var(--bg-center) 0%,
+    var(--bg) 50%,
+    var(--bg-outer) 100%
+  );
+}
+
+.preloader--exiting {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader__inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
+}
+
+.preloader__glow {
+  position: absolute;
+  inset: -35%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 140, 0, 0.28) 0%, transparent 68%);
+  animation: preloader-glow 2.1s ease-in-out infinite;
+}
+
+:host-context(.dark) .preloader__glow {
+  background: radial-gradient(circle, rgba(245, 175, 25, 0.22) 0%, transparent 68%);
+}
+
+.preloader__logo {
+  position: relative;
+  z-index: 1;
+  width: 10rem;
+  height: auto;
+  animation: preloader-logo 2.2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 20px rgba(248, 54, 0, 0.2));
+}
+
+:host-context(.dark) .preloader__logo {
+  filter: drop-shadow(0 4px 24px rgba(245, 175, 25, 0.25));
+}
+
+.preloader__track {
+  width: min(12.5rem, 55vw);
+  height: 3px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.preloader__bar {
+  height: 100%;
+  width: 42%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #fe8c00, #f83600);
+  animation: preloader-bar 1.15s ease-in-out infinite;
+}
+
+@keyframes preloader-logo {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  45% {
+    transform: translateY(-10px) scale(1.06);
+  }
+  55% {
+    transform: translateY(-6px) scale(1.03);
+  }
+}
+
+@keyframes preloader-glow {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes preloader-bar {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}

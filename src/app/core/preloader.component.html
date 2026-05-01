@@ -1,0 +1,24 @@
+@if (!done()) {
+  <div
+    class="preloader"
+    [class.preloader--exiting]="exiting()"
+    role="progressbar"
+    aria-valuetext="Loading portfolio"
+    aria-busy="true"
+  >
+    <div class="preloader__inner">
+      <div class="preloader__glow" aria-hidden="true"></div>
+      <img
+        class="preloader__logo"
+        src="assets/images/logo.svg"
+        width="72"
+        height="80"
+        alt=""
+        decoding="async"
+      />
+    </div>
+    <div class="preloader__track" aria-hidden="true">
+      <div class="preloader__bar"></div>
+    </div>
+  </div>
+}

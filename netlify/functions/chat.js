@@ -2,11 +2,6 @@
 
 const { handleChatRequest } = require('./lib/chat-core.cjs');
 
-/**
- * Comma-separated list in ALLOWED_ORIGINS, or single ALLOWED_ORIGIN (legacy).
- * Browser sends `Origin: https://www.example.com` — that string must be listed
- * if not using `*`. Listing both apex and www avoids status 0 (CORS) failures.
- */
 function normalizeOriginUrl(value) {
   return String(value || '')
     .trim()

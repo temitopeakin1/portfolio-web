@@ -1,6 +1,5 @@
 import gsap from 'gsap';
 
-/** Routed component host element(s) live alongside `<router-outlet>` inside this wrapper. */
 export function getRoutedHostElements(container: HTMLElement): HTMLElement[] {
   return Array.from(container.children).filter(
     (el): el is HTMLElement =>

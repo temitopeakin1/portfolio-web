@@ -65,7 +65,7 @@ function mapNodeToPost(node: HashnodePostNode, index: number): BlogPost {
     title: node.title,
     excerpt: node.brief || '',
     date: formatDate(node.publishedAt),
-    readTime: '–', // Hashnode API doesn't expose readTime in this query
+    readTime: '–',
     url: node.url,
   };
 }

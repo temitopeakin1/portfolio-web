@@ -8,7 +8,5 @@ export interface AiEnvironmentConfig {
     endpoint: string;
     /** Unused for `/api/chat` flow (model is set on the server). */
     model?: string;
-    /** Not used when using server-side OPENAI_API_KEY only. */
-    apiKey?: string;
   };
 }
