@@ -64,9 +64,14 @@
   </main>
   <footer class="py-6 px-8 md:px-24 lg:px-32 border-t border-[var(--border)] text-sm flex flex-col md:flex-row flex-wrap items-center justify-center md:justify-between gap-y-2 text-center md:text-left" style="color: var(--text-muted);">
     <p class="m-0 text-center md:text-left">&copy; {{ currentYear }} Temitope Akinmegha. All rights reserved.</p>
-    <p class="m-0 shrink-0 text-center md:ml-auto md:text-right">
-      <time class="inline-flex items-baseline gap-4 tabular-nums" [attr.datetime]="clockIso()">
+    <p class="m-0 shrink-0 w-full md:w-auto text-center md:ml-auto md:text-right">
+      <time
+        class="tabular-nums inline-flex flex-wrap items-baseline justify-center md:justify-end gap-x-2.5 md:gap-x-3"
+        [attr.datetime]="clockIso()"
+        title="Date, time, and timezone from your device (where you are viewing this site)"
+      >
         <span>{{ clockDateDisplay() }}</span>
+        <span aria-hidden="true" class="opacity-70">·</span>
         <span>{{ clockDisplay() }}</span>
       </time>
     </p>

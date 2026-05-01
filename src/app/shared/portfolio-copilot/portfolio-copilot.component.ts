@@ -6,8 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-
 import { AiChatMessage, AiService } from '../../core/ai.service';
 import { PortfolioContextService } from '../../core/portfolio-context.service';
 
@@ -24,17 +22,16 @@ interface CopilotMessage {
 
 const SUGGESTED_PROMPTS = [
   "Give me Temitope's 30-second elevator pitch for recruiters.",
-  'Which projects are best for fintech use cases?',
   'What frontend technologies does Temitope use most?',
   'Explain ACID properties in database transactions.',
-  'What trade-offs matter when choosing REST vs GraphQL?',
+  'What backend technologies does Temitope use most?',
   'Explain the SOLID principle to a newbie Engineer.'
 ];
 
 @Component({
   selector: 'app-portfolio-copilot',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './portfolio-copilot.component.html',
   styleUrl: './portfolio-copilot.component.css',
 })
@@ -42,17 +39,10 @@ export class PortfolioCopilotComponent {
   @ViewChild('threadEl') private threadEl?: ElementRef<HTMLElement>;
 
   protected readonly starterPrompts = SUGGESTED_PROMPTS;
-  protected readonly capabilities: { label: string; route?: string }[] = [
-    { label: 'Portfolio Q&A', route: '/about' },
-    { label: 'Tech & system design' },
-    { label: 'Projects', route: '/projects' },
-    { label: 'Blog', route: '/blog' },
-  ];
   protected readonly input = signal('');
   protected readonly loading = signal(false);
   protected readonly botSenderLabel = 'Tmegha AI bot';
   protected readonly userSenderLabel = 'You';
-  /** Same mark as site header / favicon */
   protected readonly copilotLogoSrc = 'assets/images/logo.svg';
   protected readonly copyFeedbackId = signal<string | null>(null);
   protected readonly codeCopyFeedback = signal<string | null>(null);

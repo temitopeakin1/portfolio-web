@@ -20,6 +20,19 @@ export class TechStackComponent {
       items: ['PostgreSQL', 'MongoDB', 'Redis', 'MySQL'],
     },
     {
+      title: 'Containerization & Cloud',
+      items: [
+        'Docker',
+        'Kubernetes',
+        'Helm',
+        'Docker Compose',
+        'AWS',
+        'GCP',
+        'Azure',
+        'Container orchestration',
+      ],
+    },
+    {
       title: 'Tools & Practices',
       items: ['Git', 'CI/CD', 'Performance Optimization', 'Debugging', 'Clean Architecture'],
     },

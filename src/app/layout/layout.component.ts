@@ -41,22 +41,29 @@ export class LayoutComponent {
     const tickClock = () => {
       const d = new Date();
       this.clockDateDisplay.set(
-        d.toLocaleDateString(undefined, {
-          weekday: 'short',
-          year: 'numeric',
-          month: 'short',
+        d.toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'long',
           day: 'numeric',
+          year: 'numeric',
         }),
       );
       this.clockDisplay.set(
-        d.toLocaleTimeString(undefined, {
+        new Intl.DateTimeFormat('en-US', {
           hour: 'numeric',
           minute: '2-digit',
           second: '2-digit',
           hour12: true,
-        }),
+          timeZoneName: 'short',
+        }).format(d),
       );
-      this.clockIso.set(d.toISOString());
+      const y = d.getFullYear();
+      const mo = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const h = String(d.getHours()).padStart(2, '0');
+      const mi = String(d.getMinutes()).padStart(2, '0');
+      const s = String(d.getSeconds()).padStart(2, '0');
+      this.clockIso.set(`${y}-${mo}-${day}T${h}:${mi}:${s}`);
     };
     tickClock();
     const clockId = window.setInterval(tickClock, 1000);
@@ -91,7 +98,6 @@ export class LayoutComponent {
     this.menuOpen = false;
   }
 
-  /** Warm cache for the About hero image before navigation (hover / keyboard focus). */
   protected prefetchAboutHeroImage(): void {
     if (this.aboutHeroImagePrefetchAdded || typeof document === 'undefined') return;
     this.aboutHeroImagePrefetchAdded = true;

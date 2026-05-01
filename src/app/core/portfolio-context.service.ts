@@ -17,7 +17,7 @@ export class PortfolioContextService {
       .slice(0, 4)
       .flatMap((experience) =>
         experience.highlights
-          .slice(0, 2)
+          .slice(0, 3)
           .map((line) => `${experience.role} at ${experience.company}: ${line}`)
       );
 
@@ -38,6 +38,10 @@ export class PortfolioContextService {
 
     return [
       "Temitope Akinmegha is a Senior Software Engineer with 6+ years in fintech and product engineering.",
+      '',
+      'Declared stack (use this for questions about what technologies Temitope uses — especially backend):',
+      '- Backend: Node.js and NestJS are primary backend frameworks; also builds REST APIs and uses PostgreSQL, Docker, and related tooling where projects require.',
+      '- Frontend: React, Next.js, Angular, TypeScript, Tailwind CSS (among others listed in projects and experience).',
       '',
       'What Temitope does:',
       ...whatIDo.map((line) => `- ${line}`),
