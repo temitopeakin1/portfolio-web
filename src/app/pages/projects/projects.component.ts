@@ -53,12 +53,12 @@ export class ProjectsComponent {
           link: 'https://nzuricares-webapp.vercel.app/',
         },
         {
-          id: 'fe-onboarding',
-          title: 'Customer onboarding portal',
+          id: 'fe-teleprompter',
+          title: 'Software teleprompter',
           description:
-            'Guided onboarding with progress tracking and integration with core services for a smooth first-time experience.',
-          tech: ['Next.js', 'TypeScript', 'REST'],
-          link: '#',
+            'A browser based teleprompter that allows users to import files, markdown files, and text to be displayed on a screen in real time.',
+          tech: ['React', 'TypeScript'],
+          link: 'http://software-teleprompter.vercel.app/',
         },
         {
           id: 'fe-analytics',
@@ -188,7 +188,7 @@ export class ProjectsComponent {
 
   ]);
 
-  protected readonly selectedCategoryId = signal<string>('open-source');
+  protected readonly selectedCategoryId = signal<string>('frontend');
   protected readonly currentPage = signal(1);
 
   protected readonly activeCategory = computed(() => {

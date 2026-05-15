@@ -16,8 +16,8 @@ export class TechStackComponent {
       items: ['Node.js', 'NestJS', 'REST APIs', 'GraphQL', 'API Layer Design', 'Microservices'],
     },
     {
-      title: 'Databases',
-      items: ['PostgreSQL', 'MongoDB', 'Redis', 'MySQL'],
+      title: 'Databases & Backend as a service',
+      items: ['PostgreSQL', 'MongoDB', 'Redis', 'MySQL', 'Supabase', 'Firebase'],
     },
     {
       title: 'Containerization & Cloud',
@@ -27,8 +27,8 @@ export class TechStackComponent {
         'Helm',
         'Docker Compose',
         'AWS',
-        'GCP',
         'Azure',
+        'Digital Ocean',
         'Container orchestration',
       ],
     },
