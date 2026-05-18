@@ -1,0 +1,30 @@
+<section class="py-16 pr-8 pl-12 sm:pl-16 md:pl-20">
+  <div class="max-w-[760px] mx-auto">
+    <a routerLink="/blog" class="inline-block mb-8 text-[15px] font-medium no-underline" style="color: var(--accent);">← Back to blog</a>
+
+    @if (loading()) {
+      <p style="color: var(--text-muted);">Loading article…</p>
+    } @else if (post(); as article) {
+      @if (article.coverImage) {
+        <div class="mb-10 -mx-2 sm:mx-0 rounded-xl overflow-hidden border" style="border-color: var(--border);">
+          <img [src]="article.coverImage" [alt]="article.title" class="w-full aspect-[2/1] object-cover" />
+        </div>
+      }
+
+      <header class="mb-10">
+        <h1 class="text-4xl font-bold mb-3 tracking-tight" style="color: var(--text);">{{ article.title }}</h1>
+        @if (article.subtitle) {
+          <p class="text-xl mb-4 leading-relaxed" style="color: var(--text-muted);">{{ article.subtitle }}</p>
+        }
+        <p class="text-[15px]" style="color: var(--text-muted);">{{ article.date }} · {{ article.readTime }}</p>
+      </header>
+
+      <article class="blog-prose" [innerHTML]="renderedContent()"></article>
+    } @else {
+      <div class="rounded-xl p-8 border text-center" style="background-color: var(--bg-card); border-color: var(--border);">
+        <h1 class="text-2xl font-semibold mb-2" style="color: var(--text);">Post not found</h1>
+        <a routerLink="/blog" class="text-[15px] font-semibold no-underline" style="color: var(--accent);">Return to blog</a>
+      </div>
+    }
+  </div>
+</section>

@@ -1,8 +1,11 @@
-import { AiEnvironmentConfig } from './environment.model';
+import { AppEnvironment } from './environment.model';
 
-export const environment: AiEnvironmentConfig = {
+export const environment: AppEnvironment = {
   production: false,
-  ai: {
-    endpoint: '/api/chat',
+  ai: { endpoint: '/api/chat' },
+  blog: {
+    postsEndpoint: '/api/blog/posts',
+    adminLoginEndpoint: '/api/admin/login',
+    adminBlogEndpoint: '/api/admin/blog',
   },
 };

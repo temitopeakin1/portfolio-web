@@ -1,12 +1,11 @@
-export interface AiEnvironmentConfig {
+export interface AppEnvironment {
   production: boolean;
-  ai: {
-    /**
-     * Same-origin chat API (POST JSON `{ messages }` → `{ content }`).
-     * Dev: `/api/chat` (proxied to `dev-chat-server`). Prod: `/.netlify/functions/chat`.
-     */
-    endpoint: string;
-    /** Unused for `/api/chat` flow (model is set on the server). */
-    model?: string;
+  ai: { endpoint: string; model?: string };
+  blog: {
+    postsEndpoint: string;
+    adminLoginEndpoint: string;
+    adminBlogEndpoint: string;
   };
 }
+
+export type AiEnvironmentConfig = AppEnvironment;

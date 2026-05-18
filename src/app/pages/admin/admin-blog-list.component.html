@@ -1,0 +1,140 @@
+<section class="py-16 pr-8 pl-12 sm:pl-16 md:pl-20">
+  <div class="max-w-[1600px] mx-auto">
+    <div class="flex flex-col gap-6 mb-8 lg:flex-row lg:items-start lg:justify-between">
+      <div>
+        <h1 class="text-4xl font-bold mb-2 tracking-tight" style="color: var(--text);">Blog admin</h1>
+        <p class="text-[15px]" style="color: var(--text-muted);">Manage your articles.</p>
+        @if (!loading() && posts().length > 0) {
+          <p class="mt-2 text-[13px]" style="color: var(--text-muted);">
+            Showing {{ filteredPosts().length }} of {{ posts().length }} posts
+          </p>
+        }
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+        <label for="admin-post-search" class="sr-only">Search posts</label>
+        <div class="relative w-full max-w-[13rem] shrink-0 sm:w-52">
+          <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[14px]" style="color: var(--text-muted);" aria-hidden="true">⌕</span>
+          <input
+            id="admin-post-search"
+            type="search"
+            autocomplete="off"
+            placeholder="Search…"
+            class="w-full pl-9 pr-8 py-2.5 rounded-lg border text-[14px] outline-none focus:ring-2"
+            style="background-color: var(--bg-card); border-color: var(--border); color: var(--text); --tw-ring-color: var(--accent);"
+            [value]="searchQuery()"
+            (input)="onSearchInput($event)"
+          />
+          @if (searchQuery().trim()) {
+            <button
+              type="button"
+              (click)="clearSearch()"
+              class="absolute right-2 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded text-[18px] leading-none border-0 p-0 transition-opacity hover:opacity-80"
+              style="color: var(--text-muted); background: transparent;"
+              aria-label="Clear search"
+            >
+              ×
+            </button>
+          }
+        </div>
+
+        <div class="grid grid-cols-1 min-[400px]:grid-cols-2 gap-3 w-full min-[400px]:w-auto min-[400px]:min-w-[14rem]">
+          <a
+            routerLink="/admin/blog/new"
+            class="inline-flex items-center justify-center w-full min-h-[2.75rem] px-4 py-2.5 rounded-lg text-[15px] font-semibold no-underline border transition-opacity hover:opacity-90"
+            style="background-color: var(--accent); color: var(--btn-primary-text); border-color: var(--accent);"
+          >
+            New post
+          </a>
+          <button
+            type="button"
+            (click)="logout()"
+            class="inline-flex items-center justify-center w-full min-h-[2.75rem] px-4 py-2.5 rounded-lg text-[15px] font-semibold border transition-opacity hover:opacity-90"
+            style="color: var(--accent); border-color: var(--border); background-color: transparent;"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    @if (error()) {
+      <p class="mb-4 text-[15px]" style="color: #c45c3e;">{{ error() }}</p>
+    }
+
+    @if (loading()) {
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+          <div
+            class="rounded-xl border animate-pulse h-56"
+            style="background-color: var(--bg-card); border-color: var(--border);"
+          ></div>
+        }
+      </div>
+    } @else if (filteredPosts().length === 0 && posts().length > 0) {
+      <div class="rounded-xl border p-10 text-center" style="background-color: var(--bg-card); border-color: var(--border);">
+        <p class="text-[15px] mb-4" style="color: var(--text-muted);">No posts match “{{ searchQuery().trim() }}”.</p>
+        <button
+          type="button"
+          (click)="clearSearch()"
+          class="text-[15px] font-semibold underline-offset-2 hover:underline"
+          style="color: var(--accent);"
+        >
+          Clear search
+        </button>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+        @for (post of filteredPosts(); track post.id) {
+          <article
+            class="rounded-xl overflow-hidden border flex flex-col transition-opacity hover:opacity-95"
+            style="background-color: var(--bg-card); border-color: var(--border);"
+          >
+            @if (post.coverImage) {
+              <img [src]="post.coverImage" [alt]="post.title" class="w-full aspect-[2/1] object-cover" />
+            }
+            <div class="p-4 sm:p-5 flex flex-col flex-1">
+              <h2 class="text-lg font-semibold mb-2 line-clamp-2" style="color: var(--text);">{{ post.title }}</h2>
+              @if (post.subtitle) {
+                <p class="text-[14px] mb-2 line-clamp-2" style="color: var(--text-muted);">{{ post.subtitle }}</p>
+              }
+              <p class="text-[14px] leading-relaxed mb-3 flex-1 line-clamp-3" style="color: var(--text-muted);">
+                {{ post.excerpt }}
+              </p>
+              <div class="text-[12px] mb-3" style="color: var(--text-muted);">
+                <span>{{ post.date }}</span>
+                <span class="mx-1.5">·</span>
+                <span>{{ post.readTime }}</span>
+              </div>
+              <p class="text-[11px] font-mono mb-3 truncate" style="color: var(--text-muted);">/blog/{{ post.slug }}</p>
+              <div class="grid grid-cols-3 gap-1.5 mt-auto">
+                <a
+                  [routerLink]="['/blog', post.slug]"
+                  class="inline-flex items-center justify-center min-h-[2.25rem] px-1 py-2 rounded-lg text-[12px] font-medium border no-underline transition-opacity hover:opacity-90"
+                  style="color: var(--accent); border-color: var(--border);"
+                >
+                  View
+                </a>
+                <a
+                  [routerLink]="['/admin/blog', post.slug, 'edit']"
+                  class="inline-flex items-center justify-center min-h-[2.25rem] px-1 py-2 rounded-lg text-[12px] font-medium border no-underline transition-opacity hover:opacity-90"
+                  style="color: var(--accent); border-color: var(--border);"
+                >
+                  Edit
+                </a>
+                <button
+                  type="button"
+                  (click)="deletePost(post.slug)"
+                  class="inline-flex items-center justify-center min-h-[2.25rem] px-1 py-2 rounded-lg text-[12px] font-medium border transition-opacity hover:opacity-90"
+                  style="color: #c45c3e; border-color: var(--border); background-color: transparent;"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,31 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "slug": "building-scalable-angular-applications",
+      "title": "Building Scalable Angular Applications",
+      "excerpt": "Best practices for structuring large-scale Angular projects and maintaining performance.",
+      "date": "Feb 15, 2025",
+      "readTime": "8 min read",
+      "content": "# Building Scalable Angular Applications\n\nAs Angular applications grow, structure becomes more important than any single optimization trick.\n\n## Start with feature boundaries\n\nOrganize code by **feature**, not by file type.\n\n```typescript\nexport const routes: Routes = [\n  {\n    path: 'projects',\n    loadComponent: () =>\n      import('./pages/projects/projects.component').then((m) => m.ProjectsComponent),\n  },\n];\n```\n\n## State: local first\n\n| Approach | When to use |\n| --- | --- |\n| Component state | UI-only data |\n| Signals / services | Cross-component within a feature |\n| Global store | Truly app-wide concerns |\n\n> Optimize when metrics tell you to—not when hype tells you to.\n"
+    },
+    {
+      "id": "2",
+      "slug": "microservices-when-and-why",
+      "title": "Microservices: When and Why",
+      "excerpt": "A practical guide to deciding when microservices make sense for your architecture.",
+      "date": "Jan 28, 2025",
+      "readTime": "6 min read",
+      "content": "# Microservices: When and Why\n\nMicroservices are a deployment and team-scaling strategy—not a default architecture.\n\n## What they buy you\n\n- **Independent deployability**\n- **Team autonomy**\n- **Technology flexibility**\n\n## What they cost you\n\n- Distributed tracing and retries become everyday work.\n- Data consistency moves toward eventual consistency.\n\n> Premature distribution is one of the most expensive mistakes in backend architecture.\n"
+    },
+    {
+      "id": "3",
+      "slug": "typescript-tips-for-cleaner-code",
+      "title": "TypeScript Tips for Cleaner Code",
+      "excerpt": "Advanced TypeScript patterns that improve type safety and developer experience.",
+      "date": "Jan 10, 2025",
+      "readTime": "5 min read",
+      "content": "# TypeScript Tips for Cleaner Code\n\nTypeScript shines when types guide API design—not when they fight you.\n\n## Prefer satisfies\n\n```typescript\nconst routes = {\n  home: '/',\n  blog: '/blog',\n} as const satisfies Record<string, string>;\n```\n\n## Discriminated unions for UI state\n\n```typescript\ntype RequestState<T> =\n  | { status: 'idle' }\n  | { status: 'loading' }\n  | { status: 'success'; data: T }\n  | { status: 'error'; message: string };\n```\n\nGreat TypeScript reads like documentation that cannot go stale.\n"
+    }
+  ]
+}

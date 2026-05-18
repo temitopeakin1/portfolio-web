@@ -1,12 +1,13 @@
-import { AiEnvironmentConfig } from './environment.model';
+import { AppEnvironment } from './environment.model';
 
-const netlifyChatBaseUrl = 'https://temitopeakinmegha.netlify.app'
-  .trim()
-  .replace(/\/+$/, '');
+const base = 'https://temitopeakinmegha.netlify.app'.replace(/\/+$/, '');
 
-export const environment: AiEnvironmentConfig = {
+export const environment: AppEnvironment = {
   production: true,
-  ai: {
-    endpoint: `${netlifyChatBaseUrl}/.netlify/functions/chat`,
+  ai: { endpoint: `${base}/.netlify/functions/chat` },
+  blog: {
+    postsEndpoint: `${base}/.netlify/functions/blog-posts`,
+    adminLoginEndpoint: `${base}/.netlify/functions/admin-login`,
+    adminBlogEndpoint: `${base}/.netlify/functions/admin-blog`,
   },
 };

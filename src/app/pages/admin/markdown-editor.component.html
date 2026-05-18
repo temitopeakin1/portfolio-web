@@ -1,0 +1,40 @@
+<div class="hashnode-editor relative">
+  <textarea
+    #editor
+    class="hashnode-editor__textarea w-full resize-none border-0 bg-transparent outline-none"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    rows="18"
+    (input)="onInput($event)"
+    (keydown)="onKeyDown($event)"
+    (blur)="onBlur()"
+  ></textarea>
+
+  @if (menuOpen()) {
+    <div
+      class="slash-menu absolute z-30 w-64 max-h-72 overflow-y-auto rounded-xl border shadow-lg"
+      [style.top.px]="menuTop()"
+      [style.left.px]="menuLeft()"
+      style="background-color: var(--bg-card); border-color: var(--border);"
+      role="listbox"
+    >
+      <p class="px-3 py-2 text-xs font-medium border-b" style="color: var(--text-muted); border-color: var(--border);">
+        Type "/" for commands
+      </p>
+      @for (cmd of menuItems(); track cmd.id; let i = $index) {
+        <button
+          type="button"
+          class="slash-menu__item w-full flex items-start gap-3 px-3 py-2.5 text-left border-0 cursor-pointer transition-colors"
+          [class.slash-menu__item--active]="activeIndex() === i"
+          (mousedown)="$event.preventDefault(); selectCommand(cmd)"
+        >
+          <span class="slash-menu__icon shrink-0" aria-hidden="true">{{ cmd.icon }}</span>
+          <span class="min-w-0">
+            <span class="block text-sm font-medium" style="color: var(--text);">{{ cmd.label }}</span>
+            <span class="block text-xs truncate" style="color: var(--text-muted);">{{ cmd.description }}</span>
+          </span>
+        </button>
+      }
+    </div>
+  }
+</div>

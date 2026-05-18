@@ -1,69 +1,54 @@
-<section class="py-16 px-8">
+<section class="py-16 pr-8 pl-12 sm:pl-16 md:pl-20">
   <div class="max-w-[1200px] mx-auto">
     <h1 class="text-4xl font-bold mb-2 tracking-tight" style="color: var(--text);">Blog</h1>
     <p class="text-lg mb-12" style="color: var(--text-muted);">
       Thoughts on Software engineering, System Design & Architecture, Artificial Intelligence, Algorithms, and Technology.
     </p>
+
     @if (loading()) {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        @for (i of [1,2,3,4,5,6]; track i) {
+        @for (i of [1,2,3]; track i) {
           <div class="rounded-xl p-6 border animate-pulse h-56" style="background-color: var(--bg-card); border-color: var(--border);"></div>
         }
       </div>
     } @else {
-      @if (error()) {
-        <p class="mb-6" style="color: var(--text-muted);">{{ error() }} Showing fallback posts.</p>
-      }
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @for (post of paginatedPosts(); track post.id) {
-          <article class="rounded-xl p-6 transition-colors duration-200 border flex flex-col" style="background-color: var(--bg-card); border-color: var(--border);">
+          <a
+            [routerLink]="['/blog', post.slug]"
+            class="rounded-xl overflow-hidden transition-colors duration-200 border flex flex-col no-underline cursor-pointer hover:opacity-95"
+            style="background-color: var(--bg-card); border-color: var(--border);"
+          >
+            @if (post.coverImage) {
+              <img [src]="post.coverImage" [alt]="" class="w-full aspect-[2/1] object-cover" />
+            }
+            <div class="p-6 flex flex-col flex-1">
             <h2 class="text-xl font-semibold mb-2" style="color: var(--text);">{{ post.title }}</h2>
+            @if (post.subtitle) {
+              <p class="text-[15px] mb-2 line-clamp-2" style="color: var(--text-muted);">{{ post.subtitle }}</p>
+            }
             <p class="text-[15px] leading-relaxed mb-4 flex-1 line-clamp-3" style="color: var(--text-muted);">{{ post.excerpt }}</p>
             <div class="text-[13px] mb-4" style="color: var(--text-muted);">
               <span>{{ post.date }}</span>
               <span class="mx-2">·</span>
               <span>{{ post.readTime }}</span>
             </div>
-            <a [href]="post.url" [attr.target]="post.url.startsWith('http') ? '_blank' : null" [attr.rel]="post.url.startsWith('http') ? 'noopener' : null" class="text-[15px] font-semibold no-underline transition-colors" style="color: var(--accent);">Read more →</a>
-          </article>
+            <span class="text-[15px] font-semibold" style="color: var(--accent);">Read more →</span>
+            </div>
+          </a>
         }
       </div>
     }
+
     @if (totalPages() > 1) {
       <nav class="mt-12 flex flex-wrap items-center justify-center gap-2" aria-label="Blog pagination">
-        <button
-          type="button"
-          (click)="setPage(currentPage() - 1)"
-          [disabled]="currentPage() === 1"
-          class="px-4 py-2 rounded-lg text-[15px] font-medium border disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
-          style="color: var(--accent); border-color: var(--border);"
-        >
-          Previous
-        </button>
+        <button type="button" (click)="setPage(currentPage() - 1)" [disabled]="currentPage() === 1" class="px-4 py-2 rounded-lg text-[15px] font-medium border disabled:opacity-50" style="color: var(--accent); border-color: var(--border);">Previous</button>
         <div class="flex items-center gap-1">
           @for (pageNum of pageNumbers(); track pageNum) {
-            <button
-              type="button"
-              (click)="setPage(pageNum)"
-              class="min-w-[2.5rem] px-3 py-2 rounded-lg text-[15px] font-medium border transition-colors"
-              [class.ring-2]="currentPage() === pageNum"
-              [style.color]="currentPage() === pageNum ? 'var(--btn-primary-text)' : 'var(--accent)'"
-              [style.backgroundColor]="currentPage() === pageNum ? 'var(--accent)' : 'transparent'"
-              [style.borderColor]="currentPage() === pageNum ? 'var(--accent)' : 'var(--border)'"
-            >
-              {{ pageNum }}
-            </button>
+            <button type="button" (click)="setPage(pageNum)" class="min-w-[2.5rem] px-3 py-2 rounded-lg text-[15px] font-medium border" [style.backgroundColor]="currentPage() === pageNum ? 'var(--accent)' : 'transparent'" [style.color]="currentPage() === pageNum ? 'var(--btn-primary-text)' : 'var(--accent)'" [style.borderColor]="currentPage() === pageNum ? 'var(--accent)' : 'var(--border)'">{{ pageNum }}</button>
           }
         </div>
-        <button
-          type="button"
-          (click)="setPage(currentPage() + 1)"
-          [disabled]="currentPage() === totalPages()"
-          class="px-4 py-2 rounded-lg text-[15px] font-medium border disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
-          style="color: var(--accent); border-color: var(--border);"
-        >
-          Next
-        </button>
+        <button type="button" (click)="setPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()" class="px-4 py-2 rounded-lg text-[15px] font-medium border disabled:opacity-50" style="color: var(--accent); border-color: var(--border);">Next</button>
       </nav>
     }
   </div>
