@@ -20,8 +20,11 @@ async function handleAdminLogin(event) {
   if (event.httpMethod !== 'POST') return jsonResponse(event, 405, { error: 'Method not allowed' });
   try {
     if (!normalizeEnv(process.env.ADMIN_PASSWORD)) {
+      const onNetlify = Boolean(process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
       return jsonResponse(event, 500, {
-        error: 'ADMIN_PASSWORD is not set on the server. Add it to your .env file and restart npm start.',
+        error: onNetlify
+          ? 'ADMIN_PASSWORD is not set on the server. In Netlify → Site configuration → Environment variables, add ADMIN_PASSWORD (scope: Functions or All), then redeploy.'
+          : 'ADMIN_PASSWORD is not set on the server. Add it to your .env file and restart npm start.',
       });
     }
     const body = parseJsonBody(event);
