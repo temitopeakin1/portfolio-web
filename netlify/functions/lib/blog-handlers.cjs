@@ -5,15 +5,20 @@ const { signToken, verifyPassword, requireAdmin, normalizeEnv } = require('./adm
 const store = require('./blog-store.cjs');
 
 async function handleBlogPosts(event) {
+  store.initBlobsFromEvent(event);
   if (event.httpMethod !== 'GET') return jsonResponse(event, 405, { error: 'Method not allowed' });
-  const slug = event.queryStringParameters?.slug;
-  if (slug) {
-    const post = await store.getPostBySlug(slug);
-    if (!post) return jsonResponse(event, 404, { error: 'Post not found' });
-    return jsonResponse(event, 200, post);
+  try {
+    const slug = event.queryStringParameters?.slug;
+    if (slug) {
+      const post = await store.getPostBySlug(slug);
+      if (!post) return jsonResponse(event, 404, { error: 'Post not found' });
+      return jsonResponse(event, 200, post);
+    }
+    const posts = await store.listPosts();
+    return jsonResponse(event, 200, { posts: posts.map(({ content: _c, ...s }) => s) });
+  } catch (err) {
+    return jsonResponse(event, 500, { error: err?.message || 'Failed to load posts' });
   }
-  const posts = await store.listPosts();
-  return jsonResponse(event, 200, { posts: posts.map(({ content: _c, ...s }) => s) });
 }
 
 async function handleAdminLogin(event) {
@@ -36,6 +41,7 @@ async function handleAdminLogin(event) {
 }
 
 async function handleAdminBlog(event) {
+  store.initBlobsFromEvent(event);
   if (!requireAdmin(event)) return jsonResponse(event, 401, { error: 'Unauthorized' });
   const slugParam = event.queryStringParameters?.slug;
   try {

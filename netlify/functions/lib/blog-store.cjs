@@ -11,6 +11,17 @@ function isNetlify() {
   return Boolean(process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME);
 }
 
+/** Wire Netlify Blobs from the Lambda event (required in Functions v2). */
+function initBlobsFromEvent(event) {
+  if (!isNetlify() || !event?.blobs) return;
+  try {
+    const { connectLambda } = require('@netlify/blobs');
+    connectLambda(event);
+  } catch (err) {
+    console.error('[blog-store] connectLambda failed:', err?.message || err);
+  }
+}
+
 function readSeed() {
   try {
     return JSON.parse(fs.readFileSync(SEED_FILE, 'utf8')).posts || [];
@@ -38,27 +49,55 @@ function writeLocal(posts) {
   fs.writeFileSync(DATA_FILE, JSON.stringify({ posts }, null, 2));
 }
 
-async function getStore() {
+function getBlobStore() {
   if (!isNetlify()) return null;
   const { getStore } = require('@netlify/blobs');
-  return getStore({ name: 'blog-posts', consistency: 'strong' });
+  const siteID = process.env.SITE_ID || process.env.NETLIFY_SITE_ID;
+  const token = process.env.NETLIFY_BLOB_READ_WRITE_TOKEN;
+  const opts = { name: 'blog-posts' };
+  if (siteID && token) {
+    opts.siteID = siteID;
+    opts.token = token;
+  }
+  try {
+    return getStore(opts);
+  } catch (err) {
+    console.error('[blog-store] getStore failed:', err?.message || err);
+    return null;
+  }
+}
+
+async function listPostsFromBlobStore(store) {
+  const data = await store.get(STORE_KEY, { type: 'json' });
+  if (data?.posts?.length) return data.posts;
+  const seed = readSeed();
+  try {
+    await store.setJSON(STORE_KEY, { posts: seed });
+  } catch (err) {
+    console.error('[blog-store] blob seed write failed:', err?.message || err);
+  }
+  return seed;
 }
 
 async function listPosts() {
-  const store = await getStore();
-  if (store) {
-    const data = await store.get(STORE_KEY, { type: 'json' });
-    if (data?.posts?.length) return data.posts;
-    const seed = readSeed();
-    await store.setJSON(STORE_KEY, { posts: seed });
-    return seed;
+  if (isNetlify()) {
+    try {
+      const store = getBlobStore();
+      if (store) return await listPostsFromBlobStore(store);
+    } catch (err) {
+      console.error('[blog-store] blob list failed:', err?.message || err);
+    }
+    return readSeed();
   }
   return readLocal();
 }
 
 async function savePosts(posts) {
-  const store = await getStore();
-  if (store) {
+  if (isNetlify()) {
+    const store = getBlobStore();
+    if (!store) {
+      throw new Error('Blog storage is unavailable. Redeploy the site on Netlify and try again.');
+    }
     await store.setJSON(STORE_KEY, { posts });
     return;
   }
@@ -123,4 +162,11 @@ async function deletePost(slug) {
   await savePosts(next);
 }
 
-module.exports = { listPosts, getPostBySlug, createPost, updatePost, deletePost };
+module.exports = {
+  initBlobsFromEvent,
+  listPosts,
+  getPostBySlug,
+  createPost,
+  updatePost,
+  deletePost,
+};

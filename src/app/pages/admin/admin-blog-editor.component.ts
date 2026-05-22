@@ -189,8 +189,17 @@ export class AdminBlogEditorComponent implements OnInit {
         content: post.content,
       });
       this.slugTouched.set(true);
-    } catch {
-      this.error.set('Could not load post.');
+    } catch (err) {
+      if (err instanceof HttpErrorResponse && err.status === 401) {
+        this.auth.logout();
+        void this.router.navigate(['/admin/login']);
+        return;
+      }
+      const msg =
+        err instanceof HttpErrorResponse
+          ? String(err.error?.error || err.message)
+          : 'Could not load post.';
+      this.error.set(msg || 'Could not load post.');
     } finally {
       this.loading.set(false);
     }

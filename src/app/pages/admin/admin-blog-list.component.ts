@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { AdminAuthService } from '../../core/blog/admin-auth.service';
 import { BlogApiService } from '../../core/blog/blog-api.service';
@@ -76,10 +77,20 @@ export class AdminBlogListComponent implements OnInit {
     const token = this.auth.getToken();
     if (!token) return;
     this.loading.set(true);
+    this.error.set(null);
     try {
       this.posts.set(await this.api.adminListPosts(token));
-    } catch {
-      this.error.set('Could not load posts.');
+    } catch (err) {
+      if (err instanceof HttpErrorResponse && err.status === 401) {
+        this.auth.logout();
+        void this.router.navigate(['/admin/login'], { queryParams: { returnUrl: '/admin/blog' } });
+        return;
+      }
+      const msg =
+        err instanceof HttpErrorResponse
+          ? String(err.error?.error || err.message)
+          : 'Could not load posts.';
+      this.error.set(msg || 'Could not load posts.');
     } finally {
       this.loading.set(false);
     }
