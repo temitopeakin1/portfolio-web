@@ -30,45 +30,104 @@
         {{ activeCategory().title }}
       </h2>
 
-      @if (paginatedProjects().length === 0) {
+      <ng-template #projectCard let-project>
+        <article
+          class="rounded-xl p-6 flex flex-col h-full transition-all duration-200 sm:hover:-translate-y-0.5 border"
+          style="background-color: var(--bg-card); border-color: var(--border);"
+        >
+          <h3 class="text-xl font-semibold mb-3" style="color: var(--text);">{{ project.title }}</h3>
+          <p class="text-[15px] leading-relaxed mb-4 flex-1" style="color: var(--text-muted);">
+            {{ project.description }}
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            @for (tech of project.tech; track tech) {
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                style="background-color: var(--bg-card); color: var(--accent); border: 1px solid var(--border);"
+              >
+                {{ tech }}
+              </span>
+            }
+          </div>
+          <a
+            [href]="project.link"
+            class="text-[15px] font-semibold no-underline transition-colors"
+            style="color: var(--accent);"
+            [attr.target]="project.link.startsWith('http') ? '_blank' : null"
+            [attr.rel]="project.link.startsWith('http') ? 'noopener noreferrer' : null"
+          >
+            View project →
+          </a>
+        </article>
+      </ng-template>
+
+      @if (categoryItems().length === 0) {
         <p class="text-[15px]" style="color: var(--text-muted);">No projects in this category yet.</p>
       } @else {
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          @for (project of paginatedProjects(); track project.id) {
-            <article
-              class="rounded-xl p-6 flex flex-col transition-all duration-200 hover:-translate-y-0.5 border"
-              style="background-color: var(--bg-card); border-color: var(--border);"
-            >
-              <h3 class="text-xl font-semibold mb-3" style="color: var(--text);">{{ project.title }}</h3>
-              <p class="text-[15px] leading-relaxed mb-4 flex-1" style="color: var(--text-muted);">
-                {{ project.description }}
-              </p>
-              <div class="flex flex-wrap gap-2 mb-4">
-                @for (tech of project.tech; track tech) {
-                  <span
-                    class="px-3 py-1 rounded-full text-xs font-medium"
-                    style="background-color: var(--bg-card); color: var(--accent); border: 1px solid var(--border);"
-                  >
-                    {{ tech }}
-                  </span>
+        <div
+          #mobileCarousel
+          class="projects-mobile-carousel sm:hidden"
+          aria-roledescription="carousel"
+          [attr.aria-label]="activeCategory().title + ' projects'"
+          (touchstart)="onMobileTouchStart($event)"
+          (touchmove)="onMobileTouchMove($event)"
+          (touchend)="onMobileTouchEnd()"
+          (touchcancel)="onMobileTouchCancel()"
+        >
+          <div
+            class="projects-mobile-track"
+            [class.is-dragging]="mobileDragging()"
+            [style.transform]="mobileTrackTransform()"
+          >
+            @for (project of categoryItems(); track project.id) {
+              <div
+                class="projects-mobile-slide"
+                role="group"
+                [attr.aria-hidden]="mobileSlideIndex() !== $index"
+                [attr.aria-label]="'Project ' + ($index + 1) + ' of ' + categoryItems().length"
+              >
+                <ng-container *ngTemplateOutlet="projectCard; context: { $implicit: project }" />
+              </div>
+            }
+          </div>
+
+          @if (categoryItems().length > 1) {
+            <div class="projects-mobile-meta">
+              <span class="projects-mobile-counter" style="color: var(--text-muted);" aria-live="polite">
+                {{ mobileSlideLabel() }}
+              </span>
+              <div class="projects-mobile-dots" role="tablist" aria-label="Choose project">
+                @for (project of categoryItems(); track project.id; let i = $index) {
+                  <button
+                    type="button"
+                    role="tab"
+                    class="projects-mobile-dot"
+                    [class.projects-mobile-dot--active]="mobileSlideIndex() === i"
+                    [attr.aria-selected]="mobileSlideIndex() === i"
+                    [attr.aria-label]="'Go to ' + project.title"
+                    [style.backgroundColor]="mobileSlideIndex() === i ? 'var(--accent)' : 'var(--border)'"
+                    [style.opacity]="mobileSlideIndex() === i ? '1' : '0.55'"
+                    (click)="goToMobileSlide(i)"
+                  ></button>
                 }
               </div>
-              <a
-                [href]="project.link"
-                class="text-[15px] font-semibold no-underline transition-colors"
-                style="color: var(--accent);"
-                [attr.target]="project.link.startsWith('http') ? '_blank' : null"
-                [attr.rel]="project.link.startsWith('http') ? 'noopener noreferrer' : null"
-              >
-                View project →
-              </a>
-            </article>
+            </div>
+            <p class="projects-mobile-hint" style="color: var(--text-muted);">Swipe left or right to browse projects</p>
+          }
+        </div>
+
+        <div class="hidden sm:grid sm:grid-cols-2 gap-6">
+          @for (project of paginatedProjects(); track project.id) {
+            <ng-container *ngTemplateOutlet="projectCard; context: { $implicit: project }" />
           }
         </div>
       }
 
       @if (totalPages() > 1) {
-        <nav class="mt-12 flex flex-wrap items-center justify-center gap-2" aria-label="Projects pagination">
+        <nav
+          class="mt-12 hidden sm:flex flex-wrap items-center justify-center gap-2"
+          aria-label="Projects pagination"
+        >
           <button
             type="button"
             (click)="setPage(currentPage() - 1)"

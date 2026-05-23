@@ -14,7 +14,14 @@
         </p>
       </div>
     </div>
-    <span class="copilot-badge">Chat Version 1.0</span>
+    <div class="copilot-header-meta">
+      @if (visitCount() !== null) {
+        <span class="copilot-visit-count" [attr.title]="'Total chat sessions opened'">
+          {{ visitCountLabel() }}
+        </span>
+      }
+      <span class="copilot-badge">Chat Version 1.0</span>
+    </div>
   </header>
 
   <div class="copilot-standout">

@@ -1,4 +1,11 @@
-import { Component, computed, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  computed,
+  ElementRef,
+  signal,
+  ViewChild,
+} from '@angular/core';
 
 const PROJECTS_PER_PAGE = 6;
 
@@ -16,12 +23,18 @@ export interface ProjectCategory {
   items: ProjectItem[];
 }
 
+const MOBILE_SWIPE_THRESHOLD_RATIO = 0.18;
+const MOBILE_EDGE_RESISTANCE = 0.32;
+
 @Component({
   selector: 'app-projects',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './projects.component.html',
+  styleUrl: './projects.component.css',
 })
 export class ProjectsComponent {
+  @ViewChild('mobileCarousel') private mobileCarousel?: ElementRef<HTMLElement>;
   protected readonly categories = signal<ProjectCategory[]>([
 
     {
@@ -190,6 +203,13 @@ export class ProjectsComponent {
 
   protected readonly selectedCategoryId = signal<string>('frontend');
   protected readonly currentPage = signal(1);
+  protected readonly mobileSlideIndex = signal(0);
+  protected readonly mobileDragPx = signal(0);
+  protected readonly mobileDragging = signal(false);
+
+  private touchStartX = 0;
+  private touchStartY = 0;
+  private touchAxis: 'x' | 'y' | null = null;
 
   protected readonly activeCategory = computed(() => {
     const id = this.selectedCategoryId();
@@ -214,9 +234,111 @@ export class ProjectsComponent {
     return items.slice(start, start + PROJECTS_PER_PAGE);
   });
 
+  protected readonly mobileTrackTransform = computed(() => {
+    const index = this.mobileSlideIndex();
+    const drag = this.mobileDragPx();
+    return `translateX(calc(-${index * 100}% + ${drag}px))`;
+  });
+
+  protected mobileSlideCount(): number {
+    return this.categoryItems().length;
+  }
+
+  protected mobileSlideLabel(): string {
+    const total = this.mobileSlideCount();
+    if (total === 0) {
+      return '';
+    }
+    return `${this.mobileSlideIndex() + 1} / ${total}`;
+  }
+
+  protected onMobileTouchStart(event: TouchEvent): void {
+    if (event.touches.length !== 1) {
+      return;
+    }
+    this.touchStartX = event.touches[0].clientX;
+    this.touchStartY = event.touches[0].clientY;
+    this.touchAxis = null;
+    this.mobileDragging.set(true);
+    this.mobileDragPx.set(0);
+  }
+
+  protected onMobileTouchMove(event: TouchEvent): void {
+    if (!this.mobileDragging() || event.touches.length !== 1) {
+      return;
+    }
+
+    const x = event.touches[0].clientX;
+    const y = event.touches[0].clientY;
+    const dx = x - this.touchStartX;
+    const dy = y - this.touchStartY;
+
+    if (!this.touchAxis) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) {
+        return;
+      }
+      this.touchAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+
+    if (this.touchAxis !== 'x') {
+      return;
+    }
+
+    this.mobileDragPx.set(this.resistedDrag(dx));
+  }
+
+  protected onMobileTouchEnd(): void {
+    if (!this.mobileDragging()) {
+      return;
+    }
+
+    const width = this.mobileCarousel?.nativeElement.offsetWidth ?? 0;
+    const threshold = Math.max(48, width * MOBILE_SWIPE_THRESHOLD_RATIO);
+    const drag = this.mobileDragPx();
+    const maxIndex = Math.max(0, this.mobileSlideCount() - 1);
+    let next = this.mobileSlideIndex();
+
+    if (drag < -threshold) {
+      next = Math.min(next + 1, maxIndex);
+    } else if (drag > threshold) {
+      next = Math.max(next - 1, 0);
+    }
+
+    this.mobileSlideIndex.set(next);
+    this.mobileDragPx.set(0);
+    this.mobileDragging.set(false);
+    this.touchAxis = null;
+  }
+
+  protected onMobileTouchCancel(): void {
+    this.mobileDragPx.set(0);
+    this.mobileDragging.set(false);
+    this.touchAxis = null;
+  }
+
+  protected goToMobileSlide(index: number): void {
+    const max = Math.max(0, this.mobileSlideCount() - 1);
+    const clamped = Math.min(Math.max(index, 0), max);
+    this.mobileSlideIndex.set(clamped);
+    this.mobileDragPx.set(0);
+    this.mobileDragging.set(false);
+  }
+
+  private resistedDrag(dx: number): number {
+    const index = this.mobileSlideIndex();
+    const max = Math.max(0, this.mobileSlideCount() - 1);
+    const atStart = index === 0 && dx > 0;
+    const atEnd = index === max && dx < 0;
+    if (atStart || atEnd) {
+      return dx * MOBILE_EDGE_RESISTANCE;
+    }
+    return dx;
+  }
+
   protected selectCategory(id: string): void {
     this.selectedCategoryId.set(id);
     this.currentPage.set(1);
+    this.resetMobileCarousel();
   }
 
   protected setPage(page: number): void {
@@ -224,5 +346,12 @@ export class ProjectsComponent {
     if (page >= 1 && page <= total) {
       this.currentPage.set(page);
     }
+  }
+
+  private resetMobileCarousel(): void {
+    this.mobileSlideIndex.set(0);
+    this.mobileDragPx.set(0);
+    this.mobileDragging.set(false);
+    this.touchAxis = null;
   }
 }

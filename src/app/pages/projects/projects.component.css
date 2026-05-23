@@ -1,0 +1,70 @@
+.projects-mobile-carousel {
+  touch-action: pan-y;
+  overflow: hidden;
+  margin-inline: -0.25rem;
+  padding-inline: 0.25rem;
+}
+
+.projects-mobile-track {
+  display: flex;
+  will-change: transform;
+}
+
+.projects-mobile-track:not(.is-dragging) {
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-mobile-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding-inline: 0.125rem;
+  box-sizing: border-box;
+}
+
+.projects-mobile-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.projects-mobile-counter {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  min-width: 3.5rem;
+  text-align: center;
+}
+
+.projects-mobile-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.projects-mobile-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.projects-mobile-dot--active {
+  width: 1.25rem;
+}
+
+.projects-mobile-hint {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}

@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  OnInit,
   signal,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AiChatMessage, AiService } from '../../core/ai.service';
+import { CopilotVisitsService } from '../../core/copilot-visits.service';
 import { PortfolioContextService } from '../../core/portfolio-context.service';
 
 type CopilotRole = 'user' | 'assistant';
@@ -35,7 +37,7 @@ const SUGGESTED_PROMPTS = [
   templateUrl: './portfolio-copilot.component.html',
   styleUrl: './portfolio-copilot.component.css',
 })
-export class PortfolioCopilotComponent {
+export class PortfolioCopilotComponent implements OnInit {
   @ViewChild('threadEl') private threadEl?: ElementRef<HTMLElement>;
 
   protected readonly starterPrompts = SUGGESTED_PROMPTS;
@@ -46,6 +48,7 @@ export class PortfolioCopilotComponent {
   protected readonly copilotLogoSrc = 'assets/images/logo.svg';
   protected readonly copyFeedbackId = signal<string | null>(null);
   protected readonly codeCopyFeedback = signal<string | null>(null);
+  protected readonly visitCount = signal<number | null>(null);
   protected readonly messages = signal<CopilotMessage[]>([
     {
       id: this.makeId(),
@@ -61,8 +64,30 @@ export class PortfolioCopilotComponent {
 
   constructor(
     private readonly aiService: AiService,
-    private readonly contextService: PortfolioContextService
+    private readonly contextService: PortfolioContextService,
+    private readonly visitsService: CopilotVisitsService
   ) {}
+
+  ngOnInit(): void {
+    void this.loadVisitCount();
+  }
+
+  protected visitCountLabel(): string {
+    const count = this.visitCount();
+    if (count === null) {
+      return '';
+    }
+    const formatted = new Intl.NumberFormat('en-US').format(count);
+    const noun = count === 1 ? 'visitor' : 'visitors';
+    return `${formatted} ${noun}`;
+  }
+
+  private async loadVisitCount(): Promise<void> {
+    const count = await this.visitsService.recordSessionVisit();
+    if (count !== null) {
+      this.visitCount.set(count);
+    }
+  }
 
   protected userAvatarInitial(): string {
     return 'Y';

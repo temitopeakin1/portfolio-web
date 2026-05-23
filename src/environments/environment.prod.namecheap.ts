@@ -5,6 +5,7 @@ const base = 'https://temitopeakinmegha.netlify.app'.replace(/\/+$/, '');
 export const environment: AppEnvironment = {
   production: true,
   ai: { endpoint: `${base}/.netlify/functions/chat` },
+  copilot: { visitsEndpoint: `${base}/.netlify/functions/copilot-visits` },
   blog: {
     postsEndpoint: `${base}/.netlify/functions/blog-posts`,
     adminLoginEndpoint: `${base}/.netlify/functions/admin-login`,

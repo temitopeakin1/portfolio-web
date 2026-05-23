@@ -13,7 +13,7 @@ export class TechStackComponent {
     },
     {
       title: 'Backend & APIs',
-      items: ['Node.js', 'NestJS', 'REST APIs', 'GraphQL', 'API Layer Design', 'Microservices'],
+      items: ['Node.js', 'NestJS', 'GoLang', 'REST APIs', 'GraphQL', 'API Layer Design', 'Microservices'],
     },
     {
       title: 'Databases & Backend as a service',

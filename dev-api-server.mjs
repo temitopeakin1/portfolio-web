@@ -6,6 +6,7 @@ const require = createRequire(import.meta.url);
 const { handleChatRequest } = require('./netlify/functions/lib/chat-core.cjs');
 const { corsHeaders } = require('./netlify/functions/lib/blog-http.cjs');
 const { handleBlogPosts, handleAdminLogin, handleAdminBlog } = require('./netlify/functions/lib/blog-handlers.cjs');
+const { handleCopilotVisits } = require('./netlify/functions/lib/copilot-visits-handlers.cjs');
 
 const PORT = Number(process.env.PORT_CHAT_API || 3847);
 
@@ -42,6 +43,12 @@ const server = createServer(async (req, res) => {
     if (req.method === 'POST' && path === '/api/chat') {
       const raw = await readBody(req);
       const result = await handleChatRequest(JSON.parse(raw || '{}'));
+      res.writeHead(result.statusCode, result.headers);
+      res.end(result.body);
+      return;
+    }
+    if (path === '/api/copilot/visits') {
+      const result = await handleCopilotVisits(toEvent(req, null));
       res.writeHead(result.statusCode, result.headers);
       res.end(result.body);
       return;
