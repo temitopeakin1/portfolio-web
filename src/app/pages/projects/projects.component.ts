@@ -74,12 +74,12 @@ export class ProjectsComponent {
           link: 'http://software-teleprompter.vercel.app/',
         },
         {
-          id: 'fe-analytics',
-          title: 'Analytics & reporting suite',
+          id: 'Tmegha portfolio',
+          title: 'Temitope Akinmegha portfolio',
           description:
-            'Configurable reports, filters, and exports for stakeholders with saved views and scheduled delivery.',
-          tech: ['React', 'Charts', 'TypeScript'],
-          link: '#',
+            'Portfolio website for Temitope Akinmegha',
+          tech: ['Angular', 'OpenAI integration', 'gsap'],
+          link: 'https://temitopeakinmegha.com',
         },
       ],
     },

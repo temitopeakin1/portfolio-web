@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { adminGuard, adminGuestGuard } from './core/blog/admin.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
+  { path: '', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
   { path: 'tech-stack', loadComponent: () => import('./pages/tech-stack/tech-stack.component').then(m => m.TechStackComponent) },
   { path: 'projects', loadComponent: () => import('./pages/projects/projects.component').then(m => m.ProjectsComponent) },
@@ -35,5 +35,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: '' },
 ];
