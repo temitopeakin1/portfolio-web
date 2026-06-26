@@ -74,6 +74,14 @@ export class ProjectsComponent {
           link: 'http://software-teleprompter.vercel.app/',
         },
         {
+          id: 'legal-web',
+          title: 'Beulah Chambers',
+          description:
+            'Corporate website for a full-service Nigerian law firm, with practice-area pages, team profiles, contact flows, and responsive layouts built to present legal expertise and drive client enquiries.',
+          tech: ['PHP', 'JavaScript'],
+          link: 'https://beulahchambers.org',
+        },
+        {
           id: 'Tmegha portfolio',
           title: 'Temitope Akinmegha portfolio',
           description:
