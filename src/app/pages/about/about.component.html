@@ -1,8 +1,8 @@
 <section class="py-16 px-8">
   <div class="max-w-[1100px] mx-auto">
-    <h1 class="text-4xl font-bold mb-6 tracking-tight" style="color: var(--text);">About Me</h1>
+    <h1 class="text-4xl font-bold mb-6 tracking-tight" appMotion style="color: var(--text);">About Me</h1>
     <div class="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-12 items-start">
-      <div class="text-justify">
+      <div class="text-justify" appMotion>
         <p class="leading-relaxed mb-5" style="color: var(--text-muted);">
           I’m Temitope Akinmegha, a Senior Software Engineer with seven years of experience building and leading the
           development of production-grade web applications across the stack, primarily in fintech and product-driven
@@ -36,7 +36,7 @@
           strategy, and help teams build robust, scalable products while continuing to grow as an engineer and leader.
         </p>
       </div>
-      <div class="flex justify-center md:justify-end">
+      <div class="flex justify-center md:justify-end" appMotion>
         <img
           src="assets/images/about-image.svg"
           alt="Temitope Akinmegha"
@@ -49,7 +49,7 @@
         />
       </div>
     </div>
-    <div class="w-full pt-10 mt-12 border-t pb-2" style="border-color: var(--border);">
+    <div class="w-full pt-10 mt-12 border-t pb-2" appMotion style="border-color: var(--border);">
       <div class="flex gap-24 flex-wrap justify-center">
         <div class="flex flex-col">
           <span class="text-sm" style="color: var(--text-muted);">Years Experience</span>
@@ -70,7 +70,7 @@
     </div>
 
     <div class="mt-16">
-      <h2 class="text-2xl font-bold mb-10 tracking-tight" style="color: var(--text);">Work experience</h2>
+      <h2 class="text-2xl font-bold mb-10 tracking-tight" appMotion style="color: var(--text);">Work experience</h2>
 
       <ol class="list-none p-0 m-0">
         @for (job of workExperiences; track job.id; let last = $last) {
@@ -86,7 +86,7 @@
 
           <!-- Card -->
           <div class="flex-1 min-w-0 -mt-0.5">
-            <div class="rounded-xl p-5 md:p-6 border transition-shadow duration-200 hover:shadow-md"
+            <div class="rounded-xl p-5 md:p-6 border lift-card" appMotion
               style="background-color: var(--bg-card); border-color: var(--border);">
               <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-6 mb-4">
                 <div>
@@ -125,7 +125,7 @@
     </div>
 
     <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-      <div class="rounded-xl p-6 border flex flex-col"
+      <div class="rounded-xl p-6 border flex flex-col lift-card" appMotion
         style="background-color: var(--bg-card); border-color: var(--border);">
         <h3 class="text-base font-semibold mb-4" style="color: var(--text);">What I Do</h3>
         <div class="flex flex-col">
@@ -153,7 +153,7 @@
           }
         </div>
       </div>
-      <div class="rounded-xl p-6 border flex flex-col gap-3"
+      <div class="rounded-xl p-6 border flex flex-col gap-3 lift-card" appMotion
         style="background-color: var(--bg-card); border-color: var(--border);">
         <h3 class="text-base font-semibold mb-4" style="color: var(--text);">How I work</h3>
         <ul class="list-none p-0 m-0 space-y-2.5">
@@ -186,7 +186,7 @@
       </div>
     </div>
 
-    <div class="mt-16">
+    <div class="mt-16" appMotion>
       <app-portfolio-copilot />
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { MotionInDirective } from '../../core/motion-in.directive';
 import { BlogService } from '../../core/blog/blog.service';
 
 const POSTS_PER_PAGE = 6;
@@ -7,7 +8,7 @@ const POSTS_PER_PAGE = 6;
 @Component({
   selector: 'app-blog',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MotionInDirective],
   templateUrl: './blog.component.html',
 })
 export class BlogComponent implements OnInit {

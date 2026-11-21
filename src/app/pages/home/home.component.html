@@ -1,32 +1,31 @@
 <section class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-x-12 lg:gap-x-20 xl:gap-x-28 md:gap-y-0 items-start md:items-center min-h-[calc(100vh-180px)] py-16 px-8 max-w-6xl mx-auto md:text-left text-center">
-  <div class="md:text-left" appScrollReveal>
-    <p class="text-base font-semibold tracking-widest uppercase mb-2" style="color: var(--accent);">
+  <div class="md:text-left">
+    <p class="hero-kicker text-base font-semibold tracking-widest uppercase mb-2" style="color: var(--accent);">
       Hello,<span class="wave-emoji" aria-hidden="true">👋</span> I am
     </p>
     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-5" style="color: var(--text);">
-      <span class="whitespace-nowrap">Temitope Akinmegha</span>
-      <span class="block text-2xl md:text-3xl lg:text-4xl font-medium mt-2" style="color: var(--accent);">Senior Software Engineer</span>
+      <span class="hero-name whitespace-nowrap">Temitope Akinmegha</span>
+      <span class="hero-role block text-2xl md:text-3xl lg:text-4xl font-medium mt-2" style="color: var(--accent);">Senior Software Engineer</span>
     </h1>
-    <p class="text-lg leading-relaxed mb-8 max-w-[480px] md:max-w-none mx-auto md:mx-0" style="color: var(--text-muted);">
+    <p class="hero-copy text-lg leading-relaxed mb-8 max-w-[480px] md:max-w-none mx-auto md:mx-0" style="color: var(--text-muted);">
       with over six years of experience building production-grade web applications in fintech, products and enterprise environments.
     </p>
-    <div class="flex gap-4 flex-wrap justify-center md:justify-start">
-      <a routerLink="/projects" class="inline-flex items-center px-6 py-3 text-[15px] font-semibold rounded-lg hover:-translate-y-0.5 transition-all duration-200 no-underline" style="background-color: var(--accent); color: var(--btn-primary-text);" onmouseover="this.style.backgroundColor='var(--accent-hover)'" onmouseout="this.style.backgroundColor='var(--accent)'">
-        View Projects
-      </a>
-      <a routerLink="/contact" class="inline-flex items-center px-6 py-3 text-[15px] font-semibold rounded-lg bg-transparent border-2 hover:opacity-90 transition-all duration-200 no-underline" style="color: var(--accent); border-color: var(--accent);">
-        Get in Touch
-      </a>
+    <div class="hero-actions flex gap-4 flex-wrap justify-center md:justify-start">
+      <a routerLink="/projects" class="hero-btn hero-btn--primary">View Projects</a>
+      <a routerLink="/contact" class="hero-btn hero-btn--ghost">Get in Touch</a>
     </div>
   </div>
-  <div class="flex justify-center md:justify-end mt-10 md:mt-0 w-full" appScrollReveal [delay]="0.1">
-    <div class="rounded-xl p-6 font-mono text-[15px] leading-loose border" style="background-color: var(--bg-card); border-color: var(--border);">
-      <span class="block"><span class="text-purple-600 dark:text-purple-400">const</span> tmeghaProfile = &#123;</span>
-      <span class="block">  <span class="text-sky-600 dark:text-sky-300">domains</span>: <span class="text-green-600 dark:text-green-400">['Fintech', 'Products', 'Enterprise']</span>,</span>
-      <span class="block">  <span class="text-sky-600 dark:text-sky-300">experience</span>: <span class="text-amber-600 dark:text-amber-300">'7',</span></span>
-      <span class="block">  <span class="text-sky-600 dark:text-sky-300">stack</span>: <span class="text-green-600 dark:text-green-400">['React', 'Nextjs', 'Angular', 'Node.js', 'NestJS', 'TypeScript', 'Golang']</span>,</span>
-      <span class="block">  <span class="text-sky-600 dark:text-sky-300">summary</span>: <span class="text-green-600 dark:text-green-400">'Software engineer with strong experience building scalable fintech solutions and core product engineering'</span>,</span>
-      <span class="block">&#125;;</span>
+  <div class="flex justify-center md:justify-end mt-10 md:mt-0 w-full">
+    <div class="hero-card-wrap" (pointermove)="onCardMove($event)" (pointerleave)="onCardLeave()">
+      <div class="hero-card rounded-xl p-6 font-mono text-[15px] leading-loose border">
+        <div class="hero-card__glow" aria-hidden="true"></div>
+        <span class="code-line"><span class="text-purple-600 dark:text-purple-400">const</span> tmeghaProfile = &#123;</span>
+        <span class="code-line">  <span class="text-sky-600 dark:text-sky-300">domains</span>: <span class="text-green-600 dark:text-green-400">['Fintech', 'Products', 'Enterprise']</span>,</span>
+        <span class="code-line">  <span class="text-sky-600 dark:text-sky-300">experience</span>: <span class="text-amber-600 dark:text-amber-300">'7',</span></span>
+        <span class="code-line">  <span class="text-sky-600 dark:text-sky-300">stack</span>: <span class="text-green-600 dark:text-green-400">['React', 'Nextjs', 'Angular', 'Node.js', 'NestJS', 'TypeScript', 'Golang']</span>,</span>
+        <span class="code-line">  <span class="text-sky-600 dark:text-sky-300">summary</span>: <span class="text-green-600 dark:text-green-400">'Software engineer with strong experience building scalable fintech solutions and core product engineering'</span>,</span>
+        <span class="code-line">&#125;;</span>
+      </div>
     </div>
   </div>
 </section>

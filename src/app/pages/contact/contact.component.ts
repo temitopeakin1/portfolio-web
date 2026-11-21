@@ -3,11 +3,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { FORMSPREE_ENDPOINT } from '../../core/formspree.config';
+import { MotionInDirective } from '../../core/motion-in.directive';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MotionInDirective],
   templateUrl: './contact.component.html',
 })
 export class ContactComponent {

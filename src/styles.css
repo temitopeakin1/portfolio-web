@@ -116,3 +116,26 @@
 .blog-prose code:not(.hljs) { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.25rem; padding: 0.15rem 0.4rem; font-family: var(--font-mono); }
 .blog-prose pre.hljs-pre { border: 1px solid var(--border); border-radius: 0.75rem; overflow-x: auto; margin: 1.5rem 0; }
 .blog-prose pre.hljs-pre code { display: block; padding: 1rem; font-family: var(--font-mono); font-size: 0.875rem; }
+
+.lift-card {
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease;
+}
+
+.lift-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(42, 36, 32, 0.08);
+}
+
+:where(.dark) .lift-card:hover {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift-card,
+  .lift-card:hover {
+    transition: none;
+    transform: none;
+  }
+}

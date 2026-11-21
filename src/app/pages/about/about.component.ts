@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MotionInDirective } from '../../core/motion-in.directive';
 import { PortfolioCopilotComponent } from '../../shared/portfolio-copilot/portfolio-copilot.component';
 
 export interface WhatIDoItem {
@@ -21,7 +22,7 @@ export interface WorkExperience {
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [PortfolioCopilotComponent],
+  imports: [PortfolioCopilotComponent, MotionInDirective],
   templateUrl: './about.component.html',
 })
 export class AboutComponent {

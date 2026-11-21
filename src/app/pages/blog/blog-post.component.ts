@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { BlogService } from '../../core/blog/blog.service';
 import { MarkdownService } from '../../core/blog/markdown.service';
+import { MotionInDirective } from '../../core/motion-in.directive';
 
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MotionInDirective],
   templateUrl: './blog-post.component.html',
 })
 export class BlogPostComponent implements OnInit {

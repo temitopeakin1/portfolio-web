@@ -1,0 +1,75 @@
+.meme-toast {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 4.75rem;
+  z-index: 60;
+  display: inline-flex;
+  align-items: baseline;
+  max-width: min(24rem, calc(100vw - 2rem));
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #8a847c;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 22px rgba(42, 36, 32, 0.08);
+  pointer-events: none;
+  user-select: none;
+  animation: meme-toast-in 0.4s ease;
+}
+
+.meme-toast__emoji {
+  margin-left: 0.12em;
+}
+
+.meme-toast--out {
+  animation: meme-toast-out 0.32s ease forwards;
+}
+
+:host-context(.dark) .meme-toast {
+  background: rgba(61, 40, 23, 0.94);
+  color: var(--text-muted);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+@keyframes meme-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes meme-toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (max-width: 767px) {
+  .meme-toast {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 5.5rem;
+    max-width: none;
+    font-size: 0.82rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meme-toast {
+    display: none;
+  }
+}

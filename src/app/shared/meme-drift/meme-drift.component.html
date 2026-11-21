@@ -1,0 +1,5 @@
+@if (toast(); as phrase) {
+  <div class="meme-toast" [class.meme-toast--out]="leaving()" aria-hidden="true">
+    <span>{{ phrase.label }}</span><span class="meme-toast__emoji">{{ phrase.emoji }}</span>
+  </div>
+}

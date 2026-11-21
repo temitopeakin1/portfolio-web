@@ -14,11 +14,12 @@ import { filter } from 'rxjs/operators';
 import { ThemeService } from '../core/theme.service';
 import { ScrollTrigger } from '../core/gsap-setup';
 import { animatePageEnter, getRoutedHostElements } from '../core/page-transition';
+import { MemeDriftComponent } from '../shared/meme-drift/meme-drift.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, MemeDriftComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

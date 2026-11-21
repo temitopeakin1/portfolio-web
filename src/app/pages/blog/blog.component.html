@@ -1,7 +1,7 @@
 <section class="py-16 pr-8 pl-12 sm:pl-16 md:pl-20">
   <div class="max-w-[1200px] mx-auto">
-    <h1 class="text-4xl font-bold mb-2 tracking-tight" style="color: var(--text);">Blog</h1>
-    <p class="text-lg mb-12" style="color: var(--text-muted);">
+    <h1 class="text-4xl font-bold mb-2 tracking-tight" appMotion style="color: var(--text);">Blog</h1>
+    <p class="text-lg mb-12" appMotion style="color: var(--text-muted);">
       Thoughts on Software engineering, System Design & Architecture, Artificial Intelligence, Algorithms, and Technology.
     </p>
 
@@ -16,7 +16,7 @@
         @for (post of paginatedPosts(); track post.id) {
           <a
             [routerLink]="['/blog', post.slug]"
-            class="rounded-xl overflow-hidden transition-colors duration-200 border flex flex-col no-underline cursor-pointer hover:opacity-95"
+            class="rounded-xl overflow-hidden lift-card border flex flex-col no-underline cursor-pointer" appMotion
             style="background-color: var(--bg-card); border-color: var(--border);"
           >
             @if (post.coverImage) {

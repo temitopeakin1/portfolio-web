@@ -6,6 +6,7 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
+import { MotionInDirective } from '../../core/motion-in.directive';
 
 const PROJECTS_PER_PAGE = 6;
 
@@ -29,7 +30,7 @@ const MOBILE_EDGE_RESISTANCE = 0.32;
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MotionInDirective],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
 })

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { MotionInDirective } from '../../core/motion-in.directive';
 
 @Component({
   selector: 'app-tech-stack',
   standalone: true,
+  imports: [MotionInDirective],
   templateUrl: './tech-stack.component.html',
 })
 export class TechStackComponent {
