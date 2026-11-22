@@ -1,3 +1,15 @@
+/* Hide intro targets before GSAP runs so the static hero never flashes in. */
+:host:not(.hero-intro-ready) .hero-kicker,
+:host:not(.hero-intro-ready) .hero-name,
+:host:not(.hero-intro-ready) .hero-role,
+:host:not(.hero-intro-ready) .hero-copy,
+:host:not(.hero-intro-ready) .hero-actions a,
+:host:not(.hero-intro-ready) .hero-card,
+:host:not(.hero-intro-ready) .code-line {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .hero-card-wrap {
   width: min(100%, 34rem);
   perspective: 1100px;
@@ -89,6 +101,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :host:not(.hero-intro-ready) .hero-kicker,
+  :host:not(.hero-intro-ready) .hero-name,
+  :host:not(.hero-intro-ready) .hero-role,
+  :host:not(.hero-intro-ready) .hero-copy,
+  :host:not(.hero-intro-ready) .hero-actions a,
+  :host:not(.hero-intro-ready) .hero-card,
+  :host:not(.hero-intro-ready) .code-line {
+    opacity: 1;
+    visibility: visible;
+  }
+
   .hero-btn {
     transition: none;
   }

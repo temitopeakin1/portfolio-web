@@ -21,8 +21,10 @@ export class HomeComponent {
       this.tiltEnabled =
         !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       if (reduce) {
+        this.host.nativeElement.classList.add('hero-intro-ready');
         return;
       }
+      this.prepareIntro();
       void this.playIntro();
     }, { injector: this.injector });
   }
@@ -72,22 +74,46 @@ export class HomeComponent {
     gsap.to(glow, { opacity: 0, duration: 0.4, overwrite: 'auto' });
   }
 
+  /** Hide hero pieces immediately so they never flash fully visible before GSAP runs. */
+  private prepareIntro(): void {
+    const root = this.host.nativeElement;
+    gsap.set(root.querySelectorAll('.hero-kicker'), { y: 18, autoAlpha: 0 });
+    gsap.set(root.querySelectorAll('.hero-name'), { y: 26, autoAlpha: 0 });
+    gsap.set(root.querySelectorAll('.hero-role'), { y: 18, autoAlpha: 0 });
+    gsap.set(root.querySelectorAll('.hero-copy'), { y: 14, autoAlpha: 0 });
+    gsap.set(root.querySelectorAll('.hero-actions a'), { y: 12, autoAlpha: 0 });
+    gsap.set(root.querySelectorAll('.hero-card'), { y: 22, autoAlpha: 0 });
+    gsap.set(root.querySelectorAll('.code-line'), { x: 10, autoAlpha: 0 });
+  }
+
   private async playIntro(): Promise<void> {
     await this.waitForPreloader();
     if (!this.host.nativeElement.isConnected) {
       return;
     }
 
+    this.host.nativeElement.classList.add('hero-intro-ready');
+
     const ctx = gsap.context(() => {
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
       timeline
-        .from('.hero-kicker', { y: 18, autoAlpha: 0, duration: 0.55 })
-        .from('.hero-name', { y: 26, autoAlpha: 0, duration: 0.75 }, '-=0.32')
-        .from('.hero-role', { y: 18, autoAlpha: 0, duration: 0.55 }, '-=0.48')
-        .from('.hero-copy', { y: 14, autoAlpha: 0, duration: 0.5 }, '-=0.36')
-        .from('.hero-actions a', { y: 12, autoAlpha: 0, stagger: 0.08, duration: 0.45 }, '-=0.32')
-        .from('.hero-card', { y: 22, autoAlpha: 0, duration: 0.7 }, '-=0.55')
-        .from('.code-line', { x: 10, autoAlpha: 0, stagger: 0.055, duration: 0.35 }, '-=0.4');
+        .fromTo('.hero-kicker', { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.55 })
+        .fromTo('.hero-name', { y: 26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75 }, '-=0.32')
+        .fromTo('.hero-role', { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.55 }, '-=0.48')
+        .fromTo('.hero-copy', { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5 }, '-=0.36')
+        .fromTo(
+          '.hero-actions a',
+          { y: 12, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, stagger: 0.08, duration: 0.45 },
+          '-=0.32'
+        )
+        .fromTo('.hero-card', { y: 22, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, '-=0.55')
+        .fromTo(
+          '.code-line',
+          { x: 10, autoAlpha: 0 },
+          { x: 0, autoAlpha: 1, stagger: 0.055, duration: 0.35 },
+          '-=0.4'
+        );
     }, this.host.nativeElement);
 
     this.destroyRef.onDestroy(() => ctx.revert());
@@ -98,15 +124,25 @@ export class HomeComponent {
     if (!loader) {
       return Promise.resolve();
     }
+
+    // Preloader CSS fade is ~0.45s; start the intro near the end of that exit.
+    const afterExitMs = 450;
+
     if (loader.classList.contains('preloader--exiting')) {
-      return this.delay(180);
+      return this.delay(afterExitMs);
     }
+
     return new Promise((resolve) => {
       const observer = new MutationObserver(() => {
         const current = document.querySelector('app-preloader .preloader');
-        if (!current || current.classList.contains('preloader--exiting')) {
+        if (!current) {
           observer.disconnect();
-          void this.delay(180).then(resolve);
+          resolve();
+          return;
+        }
+        if (current.classList.contains('preloader--exiting')) {
+          observer.disconnect();
+          void this.delay(afterExitMs).then(resolve);
         }
       });
       observer.observe(document.body, {
